@@ -29,34 +29,45 @@
 function parseStory(rawStory) {
   // Your code here.
   console.log(rawStory)
-  const regex = /(?:^|\W)[n|v|a](?:$|\W)/g;
+  const regex = /(?:^|\W)[n|v|a|](?:$|\W)/g;
+  const regexPunc = /[.,\/]/;
   let newArr = [];
+  const array = rawStory.split(' ');
 
-const array = rawStory.split(' ');
-
-///1- 
 array.forEach(element => {
-  if (regex.test(element)) {
-  
-    const matchReg = element.match(regex)
-    
-    if (matchReg[0] === '[n]') {
-      element =element.replace(regex, '')
-      
-      newArr.push({word: element, pos: 'noun'})
-    }else if (matchReg[0] === '[v]') {
-      element =element.replace(regex, '')
-      newArr.push({word: element, pos: 'verb'})
-    }else if (matchReg[0] === '[a]') {
-      element =element.replace(regex, '')
-      newArr.push({word: element, pos: 'adj'})
+
+//------------ REPLACE COMMAS-----------//
+
+  if (regexPunc.test(element)) {
+    let matRegPunc = element.match(regexPunc);
+    console.log(matRegPunc[0])
+    if (matRegPunc[0] === ',') {
+      element = element.replace(regexPunc, '');
+      newArr.push({word: ','});
+    }else {
+        element = element.replace(regexPunc, '');
+        newArr.push({word: '.'});
     }
-  }else {newArr.push({word:element})}
-
-
-  
+  }
+//------------ REPLACE [N|V|A]-----------//
+  if (regex.test(element)) {
+    const matchReg = element.match(regex);
+    if (matchReg[0] === '[n]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'noun'});
+    }else if (matchReg[0] === '[v]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'verb'});
+    }else if (matchReg[0] === '[a]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'adj'});
+    }
+    
+  }else {newArr.push({word:element})};
 });
-  console.log(newArr)
+
+
+  // console.log(newArr)
   return newArr; // This line is currently wrong :)
 }
 
