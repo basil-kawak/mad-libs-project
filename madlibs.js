@@ -98,23 +98,44 @@ getRawStory().then(parseStory).then((processedStory) => {
       cInput.setAttribute('type', 'text');
       cInput.setAttribute('maxlength', '20');
       cInput.setAttribute('placeholder', `${element.pos} `);
+//------------- SPAN FOR INPUT VALUES PREVIEW----------//
       let inputValPrev = document.createElement('span');
       let x = document.createTextNode(`(${element.pos}) `);
-      
       inputValPrev.appendChild(x);
       inputValPrev.style.color = '#ff8a0d';
-
-
+//---------- DISPLAY INPUT CHANNGES ---------------//
       cInput.addEventListener('input', function(){
+        if (cInput.value ) {
         inputValPrev.style.backgroundColor='#3d3d3d'
         inputValPrev.innerText = `${cInput.value} `;
+          console.log('baba');
+        }else {
+          inputValPrev.innerText = `(${cInput.placeholder})`;
+          inputValPrev.style.backgroundColor='#fff'
 
+        }
       })
       madLibsPreview.appendChild(inputValPrev);
       // madLibsPreview.appendChild(cInput);
       madLibsEdit.appendChild(cInput);
     }
   }
+
+
+  let inputArr = document.querySelectorAll('input');
+  console.log(inputArr)
+  for (let i = 0; i< inputArr.length-1; i++) {
+    let input = inputArr[i]
+    console.log(typeof(input))
+    input.addEventListener('keyup', function(e){
+      if (e.keyCode == 13) {
+        inputArr[i+1].focus();
+      }
+    })
+    console.log(input)
+  }
+
+  // cInput
 
 
 
