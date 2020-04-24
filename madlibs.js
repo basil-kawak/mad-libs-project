@@ -26,21 +26,19 @@
  * There are multiple ways to do this, but you may want to use regular expressions.
  * Please go through this lesson: https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/regular-expressions/
  */
-  //const = /[, ]+/g;
- // const regex = (?:^|\W)[n|v|a](?:$|\W);
- // const regexPunc = /[.,\/]/;
- let newArr = [];
+
+let newArr = [];
 function parseStory(rawStory) {
-  // Your code here.
+
   // console.log(rawStory)
-  const regex = /(?:^|\W)[n|v|a|](?:$|\W)/g;
+  const regex = /(?:^|\W)[r|v|a|m|d|b|g|p|n|](?:$|\W)/g;
   const regexPunc = /[.,\/]/;
   // let newArr = [];
   const array = rawStory.split(' ');
 
 array.forEach(element => {
 
-//------------ REPLACE [N|V|A]-----------//
+//------------ REPLACE [n|v|a|r|m|b|p|...etc.]-----------//
   if (regex.test(element)) {
     const matchReg = element.match(regex);
     if (matchReg[0] === '[n]') {
@@ -51,12 +49,31 @@ array.forEach(element => {
       newArr.push({word: element, pos: 'verb'});
     }else if (matchReg[0] === '[a]') {
       element =element.replace(regex, '');
-      newArr.push({word: element, pos: 'adj'});
+      newArr.push({word: element, pos: 'adjective'});
+    }else if (matchReg[0] === '[r]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'relative'});
+    }else if (matchReg[0] === '[m]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'name'});
+    }else if (matchReg[0] === '[d]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'verb-ed'});
+    }else if (matchReg[0] === '[b]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'body-part'});
+    }else if (matchReg[0] === '[g]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'verb-ing'});
+    }else if (matchReg[0] === '[p]') {
+      element =element.replace(regex, '');
+      newArr.push({word: element, pos: 'plural-noun'});
     }
     
-  }else {newArr.push({word:element})};
+    }else {newArr.push({word:element})};
 
 //------------ REPLACE COMMAS-----------//
+
   if (element.match(regexPunc)) {
     let matchReg = element.match(regexPunc)[0];
     element = element.replace(regexPunc, '');
@@ -64,19 +81,13 @@ array.forEach(element => {
 });
 
   // console.log(newArr)
-  return newArr; // This line is currently wrong :)
+  return newArr; // This line was wrong :)
 }
 
 
-
-/**
- * All your other JavaScript code goes here, inside the function. Don't worry about
- * the `then` and `async` syntax for now.
- * 
- * You'll want to use the results of parseStory() to display the story on the page.
- */
 getRawStory().then(parseStory).then((processedStory) => {
-  console.log(processedStory);
+  //console.log(processedStory);
+
   let madLibsEdit = document.querySelector('.madLibsEdit');
   let madLibsPreview = document.querySelector('.madLibsPreview');
 
@@ -85,10 +96,10 @@ getRawStory().then(parseStory).then((processedStory) => {
     if (!element.pos) {
       // console.log(element)
       let editSpan = document.createElement('span');
-      editSpan.innerText = element.word + ' ';
+      editSpan.innerHTML = element.word + '&nbsp';
       madLibsEdit.appendChild(editSpan);
       let prevSpan = document.createElement('span');
-      prevSpan.innerText = element.word + ' ';
+      prevSpan.innerHTML = element.word + '&nbsp';
       madLibsPreview.appendChild(prevSpan);
 
     }
@@ -98,46 +109,49 @@ getRawStory().then(parseStory).then((processedStory) => {
       cInput.setAttribute('type', 'text');
       cInput.setAttribute('maxlength', '20');
       cInput.setAttribute('placeholder', `${element.pos} `);
+
 //------------- SPAN FOR INPUT VALUES PREVIEW----------//
+
       let inputValPrev = document.createElement('span');
       let x = document.createTextNode(`(${element.pos}) `);
       inputValPrev.appendChild(x);
-      inputValPrev.style.color = '#ff8a0d';
+      inputValPrev.setAttribute("class", "input-value");
+      //inputValPrev.style.color = '#3dfa98';
+
 //---------- DISPLAY INPUT CHANNGES ---------------//
       cInput.addEventListener('input', function(){
         if (cInput.value ) {
-        inputValPrev.style.backgroundColor='#3d3d3d'
-        inputValPrev.innerText = `${cInput.value} `;
-          console.log('baba');
+        //inputValPrev.style.backgroundColor='#3d3d3d'
+        inputValPrev.setAttribute('class', 'input-prev');
+        inputValPrev.innerHTML = `${cInput.value} &nbsp`;
+          //console.log('baba');
         }else {
           inputValPrev.innerText = `(${cInput.placeholder})`;
-          inputValPrev.style.backgroundColor='#fff'
-
+          //inputValPrev.style.backgroundColor='#fff'
         }
       })
-      madLibsPreview.appendChild(inputValPrev);
-      // madLibsPreview.appendChild(cInput);
       madLibsEdit.appendChild(cInput);
+      madLibsPreview.appendChild(inputValPrev);
+      
     }
   }
 
 
   let inputArr = document.querySelectorAll('input');
   console.log(inputArr)
-  for (let i = 0; i< inputArr.length-1; i++) {
-    let input = inputArr[i]
-    console.log(typeof(input))
+  for (let i = 0; i < inputArr.length - 1; i++) {
+    let input = inputArr[i];
+    //console.log(typeof(input))
     input.addEventListener('keyup', function(e){
-      if (e.keyCode == 13) {
+      if (e.keyCode === 13) {
         inputArr[i+1].focus();
+        inputArr.style.color = "#fff";
       }
     })
-    console.log(input)
+    //console.log(input)
   }
 
   // cInput
-
-
 
 
 
@@ -181,5 +195,3 @@ getRawStory().then(parseStory).then((processedStory) => {
       
   //   }
   // }
-
- 
