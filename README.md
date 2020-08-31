@@ -54,6 +54,6 @@ all words in the story with blanks (e.g., `Louis[n]`, `went[v]`, ...) are replac
 1. **Flexbox**: Use at least one flexbox.
 
 2. **Highlighting currently focused input**: There should be three possible styles of inputs (style is a vague word here, they just need to be distinguishable to the user):
-* currently highlighted input (if the user is typing in one)
-* filled out input (the user has already put a word there -- might require JS here ;) )
+* currently highlighted input (if the user is typing in one).
+* filled out input (the user has already put a word there -- might require JS here ;) ).
 * empty input (the user has not already put a word there).
