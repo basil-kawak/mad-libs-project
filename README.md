@@ -6,7 +6,7 @@ See [wikipedia](https://en.wikipedia.org/wiki/Mad_Libs). In normal mad libs, we 
 
 ### The story
 
-In `story.txt`, you'll find a story. By the way, for the purposes of [parsing](https://en.wikipedia.org/wiki/Parsing), we're only used periods and commas as grammar.
+In `story.txt`, you'll find a story. By the way, for the purposes of [parsing](https://en.wikipedia.org/wiki/Parsing), we're only useing periods and commas as grammar.
 
 Confusingly, the "blanks" are be anywhere a grammar part is denoted. The reason for this will be apparent later in some of the extra challenges.
 
